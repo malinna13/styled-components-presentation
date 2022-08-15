@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Styled Components Presentation</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="plugin/highlight/stackoverflow-dark.css">
+	
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section data-background-color="#E894D8">
+					<h1>Styled Components</h1>
+					<img src="img/logo.png" />
+
+					<p>
+						<small>style your apps without stress
+						</small></p>
+					
+				</section>
+
+				<section data-background-color="#A3418E">
+					
+					<h3 >What problem does <span style="text-transform:lowercase;">styled-components</span> solve?</h3>
+					<br>
+					<p class="fragment roll-in">How do we structure large applications to avoid specificity wars and naming collisions?</p>
+					<br>
+					<p class="fragment roll-in">How do we identify which styles affect a given element?</p>
+				
+				</section>
+
+				<section data-background-color="#1F0D16">
+					<section>
+					<h3>tools for managing CSS: pros and cons</h3>	
+					<img src="img/pros_cons.png" />
+</section>
+
+
+					<section>
+						<h3 class=>Vanilla CSS</h3>	
+						<br>
+						<table cellspacing="0" cellpadding="0" rules="rows">
+							<tr>
+								<td width="50%"><small><em>+ No tooling means less complexity</em></small></td>
+								<td width="50%"><small>- Global and unscoped</small></td>
+							</tr>
+							<tr>
+								<td width="50%"><small><em>+ No runtime performance costs</em></small></td>
+								<td width="50%"><small>- Can't easily share data between CSS and JS</small></td>
+							</tr>
+							<tr>
+								<td width="50%"><small><em></em></small></td>
+								<td width="50%"><small>- Requires that you remember to add vendor prefixes for many CSS properties</small></td>
+							</tr>
+							
+						</table>
+					</section>	
+					
+					<section>
+						<h3 class=>Sass / Less</h3>	
+						<br>
+						<table cellspacing="0" cellpadding="0" rules="rows">
+							<tr>
+								<td width="50%"><small><em>+ Includes powerful tools like for-loops, mixins, and nesting</em></small></td>
+								<td width="50%"><small>- Inherits a lot of "cons" from vanilla CSS</small></td>
+							</tr>
+							<tr>
+								<td width="50%"><small><em>+ Has really high developer satisfaction compared with vanilla CSS</em></small></td>
+								<td width="50%"><small>- Requires a build step</small></td>
+							</tr>
+							
+							
+						</table>
+					</section>	
+					
+					<section>
+						<h3 class=>Tailwind</h3>	
+						<br>
+						<div class="r-stack">
+						<table class="fragment fade-out" cellspacing="0" cellpadding="0" rules="rows">
+							<tr>
+								<td width="50%"><small><em>+ Solves scoping and specificity</em></small></td>
+								<td width="50%"><small>- Adds a lot of "bulk" to your markup.</small></td>
+							</tr>
+							<tr>
+								<td width="50%"><small><em>+ Includes built-in design tokens (colors, sizes…)</em></small></td>
+								<td width="50%"><small>- Because not all CSS can be turned into utilities, you'll likely need a secondary system for writing more-traditional CSS</small></td>
+							</tr>
+							<tr>
+								<td width="50%"><small><em>+ Not React-specific</em></small></td>
+								<td width="50%"><small>- Relatively steep learning curve, compared to other tools</small></td>
+							</tr>
+							
+						</table>
+						<pre class="fragment fade-up" style="font-size: 16px">
+							<code data-trim data-noescape><script style="display: block;" type="text/template">
+								<div class="relative col-start-1 col-end-2 sm:col-start-2
+  									sm:col-end-3 lg:col-start-1 lg:col-span-full
+ 									xl:col-start-2 xl:col-end-3 row-start-2 row-end-3
+  									xl:row-start-3 xl:row-end-4 self-center pr-8 sm:px-6
+  									md:px-8 pb-6 md:pb-8 lg:px-0 lg:pb-0 -mt-6 sm:-mt-10
+  									md:-mt-16 lg:-mt-32 xl:mt-0"></div></script>
+							</code>
+							</pre>
+					</div>
+					</section>	
+
+					<section>
+						<h3 class=>CSS Modules</h3>	
+						<br>
+						<div class="r-stack">
+						<table class="fragment fade-out" cellspacing="0" cellpadding="0" rules="rows">
+							<tr>
+								<td width="50%"><small><em>+ Solves scoping and specificity!</em></small></td>
+								<td width="50%"><small>- Doesn't really offer any modern convenience features, like autoprefixing</small></td>
+							</tr>
+							<tr>
+								<td width="50%"><small><em>+ Feels like writing straight-up CSS</em></small></td>
+								<td width="50%"><small>- Hard to share data between CSS and JS</small></td>
+							</tr>
+							<tr>
+								<td width="50%"><small><em>+ Offers a composes feature, to extend existing CSS classes</em></small></td>
+								<td width="50%"><small></small></td>
+							</tr>
+							
+						</table>
+						<pre class="fragment fade-up" style="font-size: 16px" >
+							<code data-trim data-noescape><script style="display: block;" type="text/template">
+								/* App.module.css */
+.wrapper {
+  background-color: gray;
+  min-height: 200px;
+}
+@media (min-width: 1025px) {
+  .wrapper {
+    font-size: 1.25rem;
+  }
+}
+// App.js
+import styles from './App.module.css';
+function App() {
+  return (
+    <div className={styles.wrapper}>
+      Hello World!
+    </div>
+  );
+}</script>
+							</code>
+							</pre>
+					</div>
+					</section>
+
+					<section>
+						<h3 class=>styled-components</h3>	
+						<br>
+						<div class="r-stack">
+						<table class="fragment fade-out" cellspacing="0" cellpadding="0" rules="rows">
+							<tr>
+								<td width="50%"><small><em>+ Solves scoping and specificity in a magnificent way.</em></small></td>
+								<td width="50%"><small>- Requires a build system</small></td>
+							</tr>
+							<tr>
+								<td width="50%"><small><em>+ Feels like writing CSS with some of the quality-of-life improvements from Sass/Less rolled in.</em></small></td>
+								<td width="50%"><small>- It's primarily a React tool</small></td>
+							</tr>
+							<tr>
+								<td width="50%"><small><em>+ Offers good solutions for animations and global styles — you can write 100% of your CSS with this tool</em></small></td>
+								<td width="50%"><small></small></td>
+							</tr>
+							
+						</table>
+
+						<pre class="fragment fade-up" style="font-size: 16px">
+							<code data-trim data-noescape><script style="display: block;" type="text/template">
+								import styled from 'styled-components';
+								function App() {
+								  return (
+									<Wrapper>
+									  Hello World!
+									</Wrapper>
+								  );
+								}
+								const Wrapper = styled.div`
+								  background-color: gray;
+								  min-height: 200px;
+								  @media (min-width: 1025px) {
+									font-size: 1.25rem;
+								  }
+								`;</script>
+							</code>
+							</pre>
+						</div>
+					</section>
+
+				</section>
+				
+				
+				<section data-background-color="#E894D8">
+					<h3>styled-components under the hood</h3>
+					<pre class="fragment fade-up" >
+						<code data-trim data-noescape><script style="display: block;" type="text/template">
+							const Button = styled.button`
+  							display: flex;
+  							&:hover {
+    						color: red;
+  							}
+							`;</script>
+						</code>
+						</pre>
+
+						<pre class="fragment fade-up" >
+							<code data-trim data-noescape><script style="display: block;" type="text/template">
+								.abc123 {
+									/* Vendor prefixes for legacy browsers: */
+									display: -webkit-box;
+									display: -webkit-flex;
+									display: -ms-flexbox;
+									display: flex;
+								  }
+								  /* Plucks out the hover pseudo-class:  */
+								  .abc123:hover {
+									color: red;
+								  }</script>
+							</code>
+							</pre>
+	
+				</section>
+
+				<section>
+				<section data-background-color="#E894D8">
+					<h3>Installation</h3>
+					<br>
+					<pre class="fragment fade-up" >
+						<code data-trim data-noescape><script style="display: block;" type="text/template">
+							npm install styled-components</script>
+						</code>
+						</pre>
+						<br>
+						<h3 class="fragment fade-up">Babel plugin</h3>
+						<br>
+						<pre class="fragment fade-up" >
+							<code data-trim data-noescape><script style="display: block;" type="text/template">
+								import styled from 'styled-components/macro';</script>
+							</code>
+							</pre>
+	
+				</section>
+			
+				<section data-background-color="#E894D8">
+					<img src="img/nobabel.png" width="520px" />
+					<img src="img/babel.png" width="520px"/>
+				</section>
+
+			</section>
+
+			<section data-background-color="#1F0D16">
+				<section>
+				<h3>Implementation</h3>	
+				<img src="img/original.gif" />
+</section>
+
+
+				<section>
+					<h3 class=>Wrapping custom components</h3>	
+					<br>
+					<img src="img/wrapping.jpg" />
+				</section>	
+
+				<section>
+					<h3 class=>Composing styled-components</h3>	
+					<br>
+					<img src="img/composing.jpg" />
+
+				</section>
+			</section>
+				<section>
+					<h3 class=>Global Styles</h3>	
+					<br>
+					
+					<p>styled-components has a specific API for creating global styles:</p>
+					<div class="r-stack">
+						<pre class="fragment fade-out" style="font-size: 16px">
+							<code data-trim data-noescape><script style="display: block;" type="text/template">
+								       // GlobalStyles.js
+import { createGlobalStyle } from 'styled-components';
+const GlobalStyles = createGlobalStyle`
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  html {
+    font-size: 1.125rem;
+  }
+  body {
+    background-color: hsl(0deg 0% 95%);
+  }
+`;</script>
+							</code>
+							</pre>
+
+					<pre class="fragment fade-up" style="font-size: 16px">
+						<code data-trim data-noescape><script style="display: block;" type="text/template">
+							// App.js
+import GlobalStyles from '../GlobalStyles';
+function App() {
+  return (
+    <Wrapper>
+      <Router>
+        {/* An entire app here! */}
+      </Router>
+      <GlobalStyles />
+    </Wrapper>
+  )
+}
+export default App;</script>
+						</code>
+						</pre>
+					</div>
+				</section>
+
+				<section>
+					<section>
+					<h3 class=>Dynamic Styles</h3>	
+					
+					
+					<p>Inline styles:</p>
+						<pre>
+							<code data-trim data-noescape><script style="display: block;" type="text/template">
+								const Button = ({ color, onClick, children }) => {
+									return (
+									  <Wrapper onClick={onClick} style={{ color }}>
+										{children}
+									  </Wrapper>
+									);
+								  }
+								  const Wrapper = styled.button`
+									color: black;
+									padding: 16px 24px;
+								  `;</script>
+							</code>
+							</pre>
+						</section>
+<section>
+						<p>Interpolation functions:</p>
+						<pre>
+							<code data-trim data-noescape><script style="display: block;" type="text/template">
+								const Button = ({ color, onClick, children }) => {
+									return (
+									  <Wrapper onClick={onClick} color={color}>
+										{children}
+									  </Wrapper>
+									);
+								  }
+								  const Wrapper = styled.button`
+									color: ${props => props.color};
+									padding: 16px 24px;
+								  `;</script>
+							</code>
+							</pre>
+						</section>
+						
+						<section>
+							<p>CSS Variables:</p>
+												<pre>
+													<code data-trim data-noescape><script style="display: block;" type="text/template">
+														const Button = ({ color, onClick, children }) => {
+															return (
+															  <Wrapper onClick={onClick} style={{ '--color': color }}>
+																{children}
+															  </Wrapper>
+															);
+														  }
+														  const Wrapper = styled.button`
+															color: var(--color);
+															padding: 16px 24px;
+														  `;</script>
+													</code>
+													</pre>
+						</section>
+
+				</section>
+
+				<section>
+					<h3 class=>Media queries</h3>	
+					<br>
+					
+						<pre>
+							<code data-trim data-noescape><script style="display: block;" type="text/template">
+								const Wrapper = styled.button`
+								color: black;
+								@media (min-width: 1200px) {
+								  color: red;
+								}
+							  `</script>
+							</code>
+							</pre>
+
+					
+				</section>
+			
+				<section>
+					<h4 style="color: #B04C94 ">When we extend the component mindset to our CSS, we gain all sorts of new superpowers:</h4>
+					<ul>
+						<li>The ability to know, with confidence, whether it's safe to remove a CSS declaration (no possibility of it affecting some totally-separate part of the application!)</li>
+						<li>A complete lack of specificity issues, no more trying to find tricks to bump up specificity</li>
+						<li>A neat and trim mental model that fits in your head and helps you understand exactly what your pages will look like, without needing to do a bunch of manual testing.</li>
+
+					</ul>
+				</section>
+				<section>
+					<h2>useful links</h2>
+					<ul>
+						<li><a href="https://styled-components.com/">styled-components.com</a></li>
+						<li><a href="https://www.npmjs.com/search?q=styled-components">npmjs.com/package/styled-components</a></li>
+						<li><a href="https://npmtrends.com/styled-components">npmtrends.com/styled-components</a></li>
+						<li><a href="https://bundlephobia.com/package/styled-components@5.3.5">bundlephobia.com/package/styled-components@5.3.5</a></li>
+						
+						
+					</ul>
+					<img  width=400px src="img/nail.png" />
+
+
+				</section>
+				
+
+			</div>
+
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				width: 1200,
+				
+  plugins: [ RevealHighlight, RevealZoom ],
+
+
+				// Parallax scrolling
+				//  parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				//  parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
